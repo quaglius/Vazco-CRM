@@ -1,0 +1,3 @@
+codigo_erp,cuit,razon_social,rubro,vendedor_codigo,tamano_cliente,estado_cuenta,potencial_crecimiento,calidad_negocio,nivel_control,categoria_cuenta,potencial_mensual,potencial_anual,venta_ultimos_13_meses,venta_promedio_mensual,variacion_vs_potencial_pct,ticket_promedio,recurrencia_compra,margen_promedio_pct,condicion_pago,dso_real_dias
+ERP001,20123456789,Acme SA Demo,Alimentos,SEBA,Grande,Activo,Alto,Bueno,Alto,A,10000,120000,80000,6153,-15,500,Mensual,25,30 dias,45
+ERP002,27999888777,Beta SRL,Tecnología,SEBA,Mediana,Activo,Medio,Regular,Medio,B,5000,60000,45000,3461,10,1200,Bimestral,18,60 dias,30

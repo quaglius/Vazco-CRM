@@ -1,0 +1,3 @@
+fecha,empresa,cuit,codigo_erp,canal,resultado,comentario,proximo_paso,vendedor_codigo,contacto_nombre,contacto_apellido,telefono,email
+2025-01-15,Acme SA Demo,20123456789,ERP001,Visita,Exitoso,Seguimiento comercial,Cotización formal,SEBA,Juan,Pérez,1122334455,juan@demo.test
+2025-02-01,Beta SRL,27999888777,ERP002,Teléfono,Pendiente,Llamada entrante,Volver a llamar,SEBA,,,

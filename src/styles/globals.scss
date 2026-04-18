@@ -1,0 +1,394 @@
+// =====================================================================
+// VazcoCRM — paleta y look inspirado en Velzon (themesbrand)
+// =====================================================================
+
+$primary:        #405189;
+$secondary:      #3577f1;
+$success:        #0ab39c;
+$info:           #299cdb;
+$warning:        #f7b84b;
+$danger:         #f06548;
+$light:          #f3f6f9;
+$dark:           #212529;
+
+$body-bg:        #f3f3f9;
+$body-color:     #212529;
+
+$border-radius:        .5rem;
+$border-radius-sm:     .35rem;
+$border-radius-lg:     .75rem;
+
+$card-border-color:    transparent;
+$card-border-radius:   $border-radius;
+$card-cap-bg:          #fff;
+
+$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+  "Helvetica Neue", Arial, sans-serif;
+
+@import "bootstrap/scss/bootstrap";
+
+:root {
+  --vz-sidebar-bg: #{$primary};
+  --vz-sidebar-bg-dark: #2a3042;
+  --vz-sidebar-text: #abb9e8;
+  --vz-sidebar-text-active: #ffffff;
+  --vz-sidebar-section: #79829c;
+  --vz-topbar-bg: #ffffff;
+  --vz-topbar-border: #e9ebec;
+  --vz-body-bg: #{$body-bg};
+  --vz-card-shadow: 0 1px 2px rgba(56, 65, 74, 0.15);
+  --vz-card-radius: #{$border-radius};
+  --vz-muted: #878a99;
+  --vz-heading: #495057;
+}
+
+html,
+body {
+  background-color: var(--vz-body-bg);
+  min-height: 100vh;
+  color: $body-color;
+  font-size: .8125rem; // 13px base, como Velzon
+  letter-spacing: .01em;
+}
+
+// ---------- Layout ----------
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+}
+
+.app-sidebar {
+  background: var(--vz-sidebar-bg);
+  color: var(--vz-sidebar-text);
+  width: 250px;
+  min-width: 250px;
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1020;
+
+  .sidebar-brand {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 0 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, $success, lighten($success, 8%));
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-right: .65rem;
+    }
+
+    .brand-text {
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: .02em;
+      font-size: 1.1rem;
+    }
+  }
+
+  .sidebar-nav {
+    padding: .75rem .5rem 1.5rem;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .sidebar-section {
+    color: var(--vz-sidebar-section);
+    text-transform: uppercase;
+    font-size: .68rem;
+    letter-spacing: .08em;
+    padding: 1rem .85rem .35rem;
+    font-weight: 600;
+  }
+
+  .nav-link {
+    color: var(--vz-sidebar-text);
+    border-radius: .35rem;
+    padding: .55rem .85rem;
+    margin: 1px .25rem;
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    font-size: .8125rem;
+    transition: background .15s, color .15s;
+
+    i {
+      font-size: 1.05rem;
+      width: 1.1rem;
+      text-align: center;
+      opacity: .85;
+    }
+
+    &:hover {
+      color: var(--vz-sidebar-text-active);
+      background: rgba(255, 255, 255, .07);
+    }
+
+    &.active {
+      color: var(--vz-sidebar-text-active);
+      background: rgba(255, 255, 255, .12);
+      font-weight: 500;
+    }
+  }
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-topbar {
+  background: var(--vz-topbar-bg);
+  border-bottom: 1px solid var(--vz-topbar-border);
+  height: 70px;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1010;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .02);
+
+  .topbar-search {
+    position: relative;
+    width: 320px;
+    max-width: 100%;
+
+    .form-control {
+      background: $light;
+      border: 0;
+      padding-left: 2.25rem;
+      height: 38px;
+      font-size: .8125rem;
+    }
+
+    i {
+      position: absolute;
+      left: .75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--vz-muted);
+      font-size: 1rem;
+    }
+  }
+
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 0;
+      background: transparent;
+      color: var(--vz-heading);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: background .15s;
+
+      &:hover { background: $light; }
+    }
+  }
+}
+
+.app-content {
+  padding: 1.5rem;
+}
+
+// ---------- Cards ----------
+.card {
+  border: 0;
+  border-radius: var(--vz-card-radius);
+  box-shadow: var(--vz-card-shadow);
+  margin-bottom: 1.25rem;
+
+  > .card-header {
+    background: transparent;
+    border-bottom: 1px dashed #e9ebec;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 60px;
+
+    .card-title {
+      margin: 0;
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--vz-heading);
+    }
+  }
+
+  > .card-body {
+    padding: 1.25rem;
+  }
+}
+
+.kpi-card {
+  .kpi-label {
+    color: var(--vz-muted);
+    text-transform: uppercase;
+    font-size: .72rem;
+    letter-spacing: .04em;
+    font-weight: 600;
+    margin-bottom: .65rem;
+  }
+
+  .kpi-value {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--vz-heading);
+    line-height: 1.1;
+  }
+
+  .kpi-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: rgba($primary, .1);
+    color: $primary;
+
+    &.bg-soft-success { background: rgba($success, .1); color: $success; }
+    &.bg-soft-info    { background: rgba($info, .1);    color: $info; }
+    &.bg-soft-warning { background: rgba($warning, .1); color: $warning; }
+    &.bg-soft-danger  { background: rgba($danger, .1);  color: $danger; }
+    &.bg-soft-primary { background: rgba($primary, .1); color: $primary; }
+  }
+
+  .kpi-link {
+    display: inline-block;
+    margin-top: .65rem;
+    font-size: .8rem;
+    font-weight: 500;
+    color: var(--vz-muted);
+    text-decoration: none;
+
+    &:hover { color: $primary; }
+  }
+}
+
+.delta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .15rem;
+  font-size: .78rem;
+  font-weight: 600;
+
+  &.up   { color: $success; }
+  &.down { color: $danger; }
+}
+
+// ---------- Mini-stats embedded in chart card ----------
+.chart-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  background: $light;
+  border-radius: $border-radius;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+
+  .chart-stat {
+    .label {
+      color: var(--vz-muted);
+      font-size: .72rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: .04em;
+      margin-bottom: .35rem;
+    }
+    .value {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--vz-heading);
+    }
+  }
+}
+
+// ---------- Tables ----------
+.table {
+  --bs-table-hover-bg: #{rgba($primary, .04)};
+  font-size: .8125rem;
+  margin-bottom: 0;
+
+  thead th {
+    background: $light;
+    color: var(--vz-heading);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: .7rem;
+    letter-spacing: .04em;
+    border-bottom: 0;
+    padding: .75rem 1rem;
+  }
+
+  tbody td {
+    padding: .75rem 1rem;
+    vertical-align: middle;
+    border-color: #e9ebec;
+  }
+}
+
+.table-dense td,
+.table-dense th {
+  padding-top: .55rem;
+  padding-bottom: .55rem;
+}
+
+// ---------- Badges (resultados / canal) ----------
+.badge-soft {
+  font-weight: 500;
+  padding: .35em .65em;
+  border-radius: .35rem;
+
+  &.success { background: rgba($success, .12); color: $success; }
+  &.danger  { background: rgba($danger, .12);  color: $danger; }
+  &.warning { background: rgba($warning, .14); color: darken($warning, 12%); }
+  &.info    { background: rgba($info, .12);    color: $info; }
+  &.primary { background: rgba($primary, .12); color: $primary; }
+  &.muted   { background: #eef0f4;             color: var(--vz-muted); }
+}
+
+// ---------- Misc ----------
+.text-muted-2 { color: var(--vz-muted) !important; }
+
+.avatar-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba($primary, .12);
+  color: $primary;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: .78rem;
+}
+
+a { text-decoration: none; }
+
+@media (max-width: 991px) {
+  .app-sidebar { display: none; }
+}

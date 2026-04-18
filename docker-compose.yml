@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16-alpine
+    ports:
+      # 5433 en el host evita choque con un PostgreSQL nativo de Windows en 5432
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: vazco_crm
+    volumes:
+      - vazco_pg:/var/lib/postgresql/data
+
+volumes:
+  vazco_pg:
