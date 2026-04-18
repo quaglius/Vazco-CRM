@@ -3,7 +3,11 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { isAuthEnabled } from "@/lib/auth-config";
 
-const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"]);
+const isPublicRoute = createRouteMatcher([
+  "/sign-in(.*)",
+  "/sign-up(.*)",
+  "/deploy-debug",
+]);
 
 const clerk = clerkMiddleware(async (auth, req) => {
   if (!isPublicRoute(req)) await auth.protect();
