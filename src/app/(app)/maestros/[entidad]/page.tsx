@@ -16,70 +16,98 @@ export default async function MaestroPage({ params }: { params: Promise<{ entida
 
   return (
     <div>
-      <h1 className="h4 mb-4">{label}</h1>
+      <div className="crm-page-header">
+        <div>
+          <nav aria-label="breadcrumb" className="breadcrumb mb-1">
+            <Link href="/maestros" className="breadcrumb-item">
+              Maestros
+            </Link>
+            <span className="breadcrumb-item active">{label}</span>
+          </nav>
+          <h1 className="crm-title">{label}</h1>
+          <p className="text-muted-2 small mb-0">Catálogo de valores para el CRM.</p>
+        </div>
+        <Link href="/maestros" className="btn btn-outline-secondary btn-sm">
+          <i className="ri-arrow-left-line me-1" />
+          Volver
+        </Link>
+      </div>
 
-      <div className="row mb-4">
-        <div className="col-md-6">
-          <h6 className="text-muted">Otros maestros</h6>
-          <div className="d-flex flex-wrap gap-1 small">
-            {Object.entries(MAESTRO_LABEL).map(([slug, text]) => (
-              <Link
-                key={slug}
-                className={`btn btn-sm ${slug === entidad ? "btn-primary" : "btn-outline-secondary"}`}
-                href={`/maestros/${slug}`}
-              >
-                {text}
-              </Link>
-            ))}
-          </div>
+      <div className="master-card-grid mb-4">
+        {Object.entries(MAESTRO_LABEL).map(([slug, text]) => (
+          <Link
+            key={slug}
+            href={`/maestros/${slug}`}
+            className={`master-card ${slug === entidad ? "active" : ""}`}
+          >
+            {text}
+          </Link>
+        ))}
+      </div>
+
+      <div className="card mb-4">
+        <div className="card-header">
+          <span className="card-title">Agregar valor</span>
+        </div>
+        <div className="card-body">
+          {write ? (
+            <form action={crearMaestroFromForm.bind(null, entidad)} className="row g-2 align-items-end">
+              <div className="col-md-6">
+                <label className="form-label small text-muted-2">Nombre</label>
+                <input name="nombre" className="form-control form-control-sm" required placeholder="Texto visible en listas" />
+              </div>
+              <div className="col-md-3">
+                <label className="form-label small text-muted-2">Orden</label>
+                <input name="orden" type="number" className="form-control form-control-sm" placeholder="Opcional" />
+              </div>
+              <div className="col-md-3">
+                <button type="submit" className="btn btn-primary w-100">
+                  <i className="ri-add-line me-1" />
+                  Agregar
+                </button>
+              </div>
+            </form>
+          ) : (
+            <p className="text-muted-2 small mb-0">Solo lectura.</p>
+          )}
         </div>
       </div>
 
-      {write ? (
-        <form action={crearMaestroFromForm.bind(null, entidad)} className="row g-2 align-items-end mb-4">
-          <div className="col-md-5">
-            <label className="form-label small text-muted">Nombre</label>
-            <input name="nombre" className="form-control form-control-sm" required />
+      <div className="card">
+        <div className="card-header">
+          <span className="card-title">Valores actuales</span>
+          <span className="text-muted-2 small">{rows.length} registros</span>
+        </div>
+        <div className="card-body p-0">
+          <div className="table-responsive">
+            <table className="table mb-0">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Orden</th>
+                  <th style={{ width: 120 }} />
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => (
+                  <tr key={r.id}>
+                    <td className="fw-semibold">{r.nombre}</td>
+                    <td className="text-muted-2">{r.orden ?? "—"}</td>
+                    <td className="text-end">
+                      {write ? (
+                        <form action={eliminarMaestro.bind(null, entidad, r.id)} className="d-inline">
+                          <button type="submit" className="btn btn-sm btn-outline-danger">
+                            Eliminar
+                          </button>
+                        </form>
+                      ) : null}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          <div className="col-md-2">
-            <label className="form-label small text-muted">Orden</label>
-            <input name="orden" type="number" className="form-control form-control-sm" />
-          </div>
-          <div className="col-md-2">
-            <button type="submit" className="btn btn-sm btn-primary">
-              Agregar
-            </button>
-          </div>
-        </form>
-      ) : null}
-
-      <div className="table-responsive card">
-        <table className="table table-sm table-dense mb-0">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Orden</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr key={r.id}>
-                <td>{r.nombre}</td>
-                <td>{r.orden ?? "—"}</td>
-                <td className="text-end">
-                  {write ? (
-                    <form action={eliminarMaestro.bind(null, entidad, r.id)} className="d-inline">
-                      <button type="submit" className="btn btn-sm btn-outline-danger">
-                        Eliminar
-                      </button>
-                    </form>
-                  ) : null}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        </div>
       </div>
     </div>
   );

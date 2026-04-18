@@ -35,3 +35,36 @@ export async function listContactos(opts: { page: number; q?: string; clienteId?
 
   return { items, total, page, pageSize, totalPages: Math.max(1, Math.ceil(total / pageSize)) };
 }
+
+export type ContactoDetailRow = {
+  id: string;
+  nombre: string;
+  apellido: string;
+  email: string;
+  telefono: string;
+  clienteId: string;
+  rolContactoId: string | null;
+  cliente: {
+    id: string;
+    razonSocial: string;
+    rubro: { nombre: string } | null;
+    vendedor: { nombreCompleto: string } | null;
+  } | null;
+  rol: { id: string; nombre: string } | null;
+};
+
+export async function getContacto(id: string): Promise<ContactoDetailRow | null> {
+  const row = await db.query.contacto.findFirst({
+    where: and(eq(contacto.id, id), isNull(contacto.deletedAt)),
+    with: {
+      cliente: {
+        with: {
+          rubro: true,
+          vendedor: true,
+        },
+      },
+      rol: true,
+    },
+  });
+  return (row as ContactoDetailRow | undefined) ?? null;
+}

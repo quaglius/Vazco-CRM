@@ -7,7 +7,7 @@ export type ClienteDetail = {
   codigoErp: string | null;
   condicionPago: string;
   vendedor: { nombreCompleto: string } | null;
-  rubro: { nombre: string } | null;
+  rubro: { id: string; nombre: string } | null;
   estadoCuenta: { nombre: string } | null;
   tamanoCliente: { nombre: string } | null;
   contactos: Array<{

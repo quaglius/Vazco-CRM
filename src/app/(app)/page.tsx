@@ -77,9 +77,9 @@ export default async function DashboardPage() {
             <i className="ri-calendar-line me-1" />
             Últimos 14 días
           </span>
-          <Link href="/actividades" className="btn btn-success btn-sm px-3">
+          <Link href="/clientes" className="btn btn-success btn-sm px-3">
             <i className="ri-add-line me-1" />
-            Nueva actividad
+            Registrar en ficha
           </Link>
         </div>
       </div>

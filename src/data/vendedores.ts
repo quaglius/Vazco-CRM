@@ -37,3 +37,16 @@ export async function listVendedores(page: number) {
 export async function listTiposVendedor() {
   return db.select().from(tipoVendedor).orderBy(asc(tipoVendedor.nombre));
 }
+
+/** Listado completo para selects (usuarios / vínculos). */
+export async function listVendedoresOptions() {
+  return db
+    .select({
+      id: vendedor.id,
+      codigo: vendedor.codigo,
+      nombreCompleto: vendedor.nombreCompleto,
+      clerkUserId: vendedor.clerkUserId,
+    })
+    .from(vendedor)
+    .orderBy(asc(vendedor.codigo));
+}

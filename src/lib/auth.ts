@@ -1,4 +1,5 @@
 import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 import { isAuthEnabled } from "@/lib/auth-config";
 
 export type Role = "admin" | "vendedor" | "viewer";
@@ -15,4 +16,16 @@ export async function canWrite(): Promise<boolean> {
   if (!isAuthEnabled()) return true;
   const role = await getRole();
   return role === "admin" || role === "vendedor";
+}
+
+/** Solo administradores pueden gestionar usuarios Clerk / vínculos. */
+export async function canManageUsers(): Promise<boolean> {
+  if (!isAuthEnabled()) return false;
+  return (await getRole()) === "admin";
+}
+
+/** Redirige a inicio si no es admin (solo con Clerk activo). */
+export async function requireAdminPage(): Promise<void> {
+  if (!isAuthEnabled()) return;
+  if ((await getRole()) !== "admin") redirect("/");
 }

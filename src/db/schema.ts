@@ -224,6 +224,7 @@ export const clienteRelations = relations(cliente, ({ one, many }) => ({
 
 export const interaccionRelations = relations(interaccion, ({ one }) => ({
   cliente: one(cliente, { fields: [interaccion.clienteId], references: [cliente.id] }),
+  contacto: one(contacto, { fields: [interaccion.contactoId], references: [contacto.id] }),
   vendedor: one(vendedor, { fields: [interaccion.vendedorId], references: [vendedor.id] }),
   canal: one(canalContacto, { fields: [interaccion.canalId], references: [canalContacto.id] }),
   resultado: one(resultadoContacto, {
