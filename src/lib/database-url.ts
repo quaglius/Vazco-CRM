@@ -22,5 +22,11 @@ export function resolveDatabaseUrl(raw: string | undefined): string {
     u += "sslmode=disable";
   }
 
+  // Supabase Transaction pooler (PgBouncer, puerto 6543): mejor para serverless que Session (:5432).
+  if (/pooler\.supabase\.com/i.test(host) && /:6543(?:\/|$)/.test(u) && !/[?&]pgbouncer=/.test(u)) {
+    u += u.includes("?") ? "&" : "?";
+    u += "pgbouncer=true";
+  }
+
   return u;
 }
