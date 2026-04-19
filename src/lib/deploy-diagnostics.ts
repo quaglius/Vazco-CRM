@@ -84,10 +84,10 @@ export async function runDeployDiagnostics(): Promise<DeployDiagnosticResult> {
   };
 
   if (resolvedUrl) {
-    const ssl = getPgSslOption();
+    const ssl = getPgSslOption(rawUrl);
     const pool = new Pool({
       connectionString: resolvedUrl,
-      ...(ssl ? { ssl } : {}),
+      ssl: ssl === undefined ? undefined : ssl,
       connectionTimeoutMillis: 15_000,
     });
     const t0 = Date.now();

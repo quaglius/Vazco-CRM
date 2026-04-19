@@ -6,7 +6,7 @@ import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schema from "../src/db/schema";
-import { resolveDatabaseUrl } from "../src/lib/database-url";
+import { getPgSslOption, resolveDatabaseUrl } from "../src/lib/database-url";
 
 const DATA_DIR = path.join(process.cwd(), "seed", "data");
 const CARTERA = path.join(DATA_DIR, "cartera.csv");
@@ -267,8 +267,10 @@ async function ensureStubCliente(
 
 async function main() {
   assertFiles();
+  const ssl = getPgSslOption(process.env.DATABASE_URL);
   const pool = new Pool({
     connectionString: resolveDatabaseUrl(process.env.DATABASE_URL),
+    ssl: ssl === undefined ? undefined : ssl,
     connectionTimeoutMillis: 15_000,
   });
   const db = drizzle(pool, { schema });

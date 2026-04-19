@@ -13,7 +13,7 @@ import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schema from "../src/db/schema";
-import { resolveDatabaseUrl } from "../src/lib/database-url";
+import { getPgSslOption, resolveDatabaseUrl } from "../src/lib/database-url";
 
 const CSV_PATH = path.join(process.cwd(), "seed", "data", "belgrano_actividades.csv");
 
@@ -190,8 +190,10 @@ async function main() {
     trim: true,
   }) as Record<string, string>[];
 
+  const ssl = getPgSslOption(process.env.DATABASE_URL);
   const pool = new Pool({
     connectionString: resolveDatabaseUrl(process.env.DATABASE_URL),
+    ssl: ssl === undefined ? undefined : ssl,
     connectionTimeoutMillis: 15_000,
   });
   const db = drizzle(pool, { schema });
