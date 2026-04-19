@@ -1,6 +1,8 @@
 import { defineConfig } from "drizzle-kit";
 import "dotenv/config";
-import { resolveDatabaseUrl } from "./src/lib/database-url";
+import { getPgSslOption, resolveDatabaseUrl } from "./src/lib/database-url";
+
+const ssl = getPgSslOption();
 
 export default defineConfig({
   schema: "./src/db/schema.ts",
@@ -8,5 +10,6 @@ export default defineConfig({
   dialect: "postgresql",
   dbCredentials: {
     url: resolveDatabaseUrl(process.env.DATABASE_URL),
+    ...(ssl ? { ssl } : {}),
   },
 });

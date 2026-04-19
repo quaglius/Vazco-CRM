@@ -1,5 +1,5 @@
 import { Pool } from "pg";
-import { resolveDatabaseUrl } from "@/lib/database-url";
+import { getPgSslOption, resolveDatabaseUrl } from "@/lib/database-url";
 import { isAuthEnabled } from "@/lib/auth-config";
 
 export type DeployDiagnosticResult = {
@@ -84,8 +84,10 @@ export async function runDeployDiagnostics(): Promise<DeployDiagnosticResult> {
   };
 
   if (resolvedUrl) {
+    const ssl = getPgSslOption();
     const pool = new Pool({
       connectionString: resolvedUrl,
+      ...(ssl ? { ssl } : {}),
       connectionTimeoutMillis: 15_000,
     });
     const t0 = Date.now();

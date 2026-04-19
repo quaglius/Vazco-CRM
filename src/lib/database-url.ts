@@ -30,3 +30,15 @@ export function resolveDatabaseUrl(raw: string | undefined): string {
 
   return u;
 }
+
+/**
+ * Mitiga `SELF_SIGNED_CERT_IN_CHAIN` cuando hay proxy/antivirus que intercepta TLS.
+ * Definí `DATABASE_SSL_REJECT_UNAUTHORIZED=false` en Netlify o local (menos seguro que el default).
+ */
+export function getPgSslOption(): { rejectUnauthorized: boolean } | undefined {
+  const v = process.env.DATABASE_SSL_REJECT_UNAUTHORIZED?.trim().toLowerCase();
+  if (v === "false" || v === "0") {
+    return { rejectUnauthorized: false };
+  }
+  return undefined;
+}
