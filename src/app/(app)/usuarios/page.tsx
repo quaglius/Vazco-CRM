@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 function roleLabel(r: string | undefined): string {
   if (r === "admin" || r === "vendedor" || r === "viewer") return r;
-  return "viewer";
+  return "admin";
 }
 
 export default async function UsuariosPage() {
@@ -57,8 +57,9 @@ export default async function UsuariosPage() {
           </nav>
           <h1 className="crm-title">Usuarios</h1>
           <p className="text-muted-2 small mb-0">
-            Identidad y roles desde Clerk; el perfil comercial se vincula a la tabla{" "}
-            <code>vendedor</code>.
+            Identidad desde Clerk; el perfil comercial se vincula a la tabla <code>vendedor</code>.
+            Modo abierto: todos los usuarios autenticados tienen permisos de administrador
+            (definí <code>RBAC_STRICT=true</code> para reactivar control granular).
           </p>
         </div>
       </div>
